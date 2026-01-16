@@ -2,22 +2,45 @@ using System;
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using Eduzo.Games.CookieMonster.Gameplay;
 using UnityEngine.UI;
 public class TimerUI : MonoBehaviour
 {
      
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private Image clockImage;
-    
-    private int startTime=59;
+    [SerializeField] private int startTime=59;
 
     private int currentTime;
+    private Coroutine _countdownCoroutine;
 
     private void Start()
     {
         currentTime = startTime;
         UpdateTimerText();
-        StartCoroutine(StartCountDown());
+        // Timer will be started when gameplay state is entered
+    }
+
+    public void StartTimer(int matchTime)
+    {
+        if (_countdownCoroutine != null)
+        {
+            StopCoroutine(_countdownCoroutine);
+        }
+
+        if (matchTime <= 0) matchTime = startTime;
+        currentTime = matchTime;
+        UpdateTimerText();
+        _countdownCoroutine = StartCoroutine(StartCountDown());
+    }
+
+    public void StopTimer()
+    {
+        if (_countdownCoroutine != null)
+        {
+            StopCoroutine(_countdownCoroutine);
+            _countdownCoroutine = null;
+        }
     }
 
     private IEnumerator StartCountDown()
@@ -41,6 +64,7 @@ public class TimerUI : MonoBehaviour
 
     private void TimerTimeEnd()
     {
-        //
+        var gameplayManager = FindObjectOfType<CookieMonsterGameplayController>();
+        if (gameplayManager) gameplayManager.OnGameOver();
     }
 }

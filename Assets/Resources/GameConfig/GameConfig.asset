@@ -17,13 +17,13 @@ MonoBehaviour:
   testModeTimeLimit: 60
   practiceModeTimeLimit: 120
   testModeLives: 3
-  practiceModeLives: 3
+  practiceModeLives: 5
   pointsPerCorrectAnswer: 10
   pointsPerWrongAnswer: 0
   fastAnswerBonus: 5
   fastAnswerThreshold: 5
   minDividend: 5
-  maxDividend: 40
+  maxDividend: 20
   allowedDivisors: 020000000300000005000000
   cookieFallDuration: 0.5
   monsterEatDuration: 0.8
